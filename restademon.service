@@ -1,0 +1,15 @@
+[Unit]
+Description=restoraunt_daemon
+
+[Service]
+PIDFile =/var/run/restd.pid
+User=root
+
+WorkingDirectory=/root/restaraunt
+ExecStart= /usr/bin/python3 main.py
+ExecStop=/bin/kill -INT $MAINPID
+ExecReload=/bin/kill -TERM $MAINPID
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
