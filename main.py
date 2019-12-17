@@ -6,7 +6,7 @@ import random
 from vk_api.longpoll import VkLongPoll, VkEventType
 
 
-keylist = ['Меню заказов' , 'О нас' , 'Помочь денюшкой' , 'Вернуться' , 'Холодец-молодец' , 'Просто харкнуть в суп' , 'Состав' , 'Заказать']
+keylist = ['Меню заказов' , 'О нас' , 'Помочь денюшкой' , 'Вернуться' , 'Холодец-молодец' , 'Просто харкнуть в суп' , 'Состав' , 'Заказать' , 'Гусь в кровавом кляре' , 'Предыстория']
 
 def check(vk):
     answer = {}
@@ -35,6 +35,7 @@ menu_keyboard = {
     'buttons': [
         [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Холодец-молодец'}}],
         [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Просто харкнуть в суп'}}],
+        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Гусь в кровавом кляре'}}],
         [{'color': 'primary'  , 'action': {'type': 'text' , 'label': 'Вернуться'}}],
     ]
 }
@@ -56,8 +57,20 @@ soup = {
         [{'color': 'primary'  , 'action': {'type': 'text' , 'label': 'Вернуться'}}],
     ]
 }
+
+gus = {
+    'one_time': False,
+    'buttons': [
+        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Состав'}}],
+        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Предыстория'}}],
+        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Заказать'}}],
+        [{'color': 'primary'  , 'action': {'type': 'text' , 'label': 'Вернуться'}}],
+    ]
+}
 holod_sostav = 'Холодец из рыбы, оливок, молока, изюма и бульона, настоенный в погребе целое десятилетие'
 soup_sostav  = 'Ну незнаю даже'
+gus_sostav   = 'Кровь девственного гуся, с печенью того же гуся, все это ещё и в кляре'
+pred_gus     = 'Предыстория сего блюда достойна отдельного упоминания. Давным давном в Мексике, Майа верили в то что если поднести жертвоприношению богам молодости, а потом испить кровь гуся, можно собсна получить молодость. В качестве даров обычно выступала, туша гуся. Вобщем типа, мы все это собрали,завернули в пищевую пленку, и кинули во фритюр'
 
 about_us = """Мы маленькая но быстро развивающаяся забегаловка.
 Пока вы не знаете о нас, но в ближайшем будущем, о нас узнает весь мир.
@@ -104,19 +117,25 @@ def main():
                 send_message(lp['id'] , 'Хороший выбор' , holodec)
             elif lp['message'] == 'Просто харкнуть в суп':
                 send_message(lp['id'] , 'Хороший выбор' , soup)
+            elif lp['message'] == 'Гусь в кровавом кляре':
+                send_message(lp['id'] , 'Хороший выбор' , gus)
             elif lp['message'] == 'О нас':
                 send_message(lp['id'] , about_us , main_keyboard)
             elif lp['message'] == 'Помочь денюшкой':
                 send_message(lp['id'] , 'Пока рано' , main_keyboard)
             elif lp['message'] == 'Заказать':
                 send_message(lp['id'] , 'Извините, но мы пока не открылись' , main_keyboard)
+            elif lp['message'] == 'Предыстория':
+                send_message(lp['id'] , pred_gus , gus)
+
             elif lp['message'] == 'Состав':
                 last_user_message = last_message(lp['id'])
                 if last_user_message == 'Холодец-молодец':
                     send_message(lp['id'] , 'Вот состав холодца-молодца: {0}'.format(holod_sostav) , holodec)
                 elif last_user_message == 'Просто харкнуть в суп':
                     send_message(lp['id'] , '{0}'.format(soup_sostav) , soup)
-                
+                elif last_user_message == 'Гусь в кровавом кляре':
+                    send_message(lp['id'] , '{0}'.format(gus_sostav) , gus)
                 else:
                     send_message(lp['id'] , 'Извините, но я вас не понял' , main_keyboard)
 if __name__ == '__main__':
