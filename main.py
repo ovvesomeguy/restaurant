@@ -6,7 +6,22 @@ import random
 from vk_api.longpoll import VkLongPoll, VkEventType
 
 
-keylist = ['Меню заказов' , 'О нас' , 'Помочь денюшкой' , 'Вернуться' , 'Холодец-молодец' , 'Просто харкнуть в суп' , 'Состав' , 'Заказать' , 'Гусь в кровавом кляре' , 'Предыстория']
+keylist = [
+    'Меню заказов',
+    'О нас', 
+    'Помочь денюшкой', 
+    'Вернуться', 
+    'Холодец-молодец', 
+    'Просто харкнуть в суп', 
+    'Состав', 
+    'Заказать', 
+    'Гусь в кровавом кляре',
+    'Взазуза',
+    'Рагу из пингвинятины',
+    'Леманадек из пингвинятины',
+    'Предыстория',
+    'К меню заказов'
+    ]
 
 def check(vk):
     answer = {}
@@ -36,6 +51,8 @@ menu_keyboard = {
         [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Холодец-молодец'}}],
         [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Просто харкнуть в суп'}}],
         [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Гусь в кровавом кляре'}}],
+        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Рагу из пингвинятины'}}],
+        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Леманадек из пингвинятины'}}],
         [{'color': 'primary'  , 'action': {'type': 'text' , 'label': 'Вернуться'}}],
     ]
 }
@@ -45,7 +62,7 @@ holodec = {
     'buttons': [
         [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Состав'}}],
         [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Заказать'}}],
-        [{'color': 'primary'  , 'action': {'type': 'text' , 'label': 'Вернуться'}}],
+        [{'color': 'primary'  , 'action': {'type': 'text' , 'label': 'К меню заказов'}}],
     ]
 }
 
@@ -54,23 +71,27 @@ soup = {
     'buttons': [
         [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Состав'}}],
         [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Заказать'}}],
-        [{'color': 'primary'  , 'action': {'type': 'text' , 'label': 'Вернуться'}}],
+        [{'color': 'primary'  , 'action': {'type': 'text' , 'label': 'К меню заказов'}}],
     ]
 }
 
-gus = {
+main_bludo = {
     'one_time': False,
     'buttons': [
         [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Состав'}}],
         [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Предыстория'}}],
         [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Заказать'}}],
-        [{'color': 'primary'  , 'action': {'type': 'text' , 'label': 'Вернуться'}}],
+        [{'color': 'primary'  , 'action': {'type': 'text' , 'label': 'К меню заказов'}}],
     ]
 }
-holod_sostav = 'Холодец из рыбы, оливок, молока, изюма и бульона, настоенный в погребе целое десятилетие'
-soup_sostav  = 'Ну незнаю даже'
-gus_sostav   = 'Кровь девственного гуся, с печенью того же гуся, все это ещё и в кляре'
-pred_gus     = 'Предыстория сего блюда достойна отдельного упоминания. Давным давном в Мексике, Майа верили в то что если поднести жертвоприношению богам молодости, а потом испить кровь гуся, можно собсна получить молодость. В качестве даров обычно выступала, туша гуся. Вобщем типа, мы все это собрали,завернули в пищевую пленку, и кинули во фритюр'
+
+holod_sostav   = 'Холодец из рыбы, оливок, молока, изюма и бульона, настоенный в погребе целое десятилетие'
+soup_sostav    = 'Ну незнаю даже'
+gus_sostav     = 'Кровь девственного гуся, с печенью того же гуся, все это ещё и в кляре'
+pred_gus       = 'Предыстория сего блюда достойна отдельного упоминания. Давным давном в Мексике, Майа верили в то что если поднести жертвоприношению богам молодости, а потом испить кровь гуся, можно собсна получить молодость. В качестве даров обычно выступала, туша гуся. Вобщем типа, мы все это собрали,завернули в пищевую пленку, и кинули во фритюр'
+pinguin_sostav = 'Королевский пингвин с юга Антарктики, привезен прямо к нам в ресторан, упакован в тесто, и зажарен на сковородке.'
+ragu_sostav    = 'Остатки от пингвина, вместе с овощами. Все на булочке с кунжутом.'
+lemon_sostav   = 'Вода от варки пингвина, с лаймом'
 
 about_us = """Мы маленькая но быстро развивающаяся забегаловка.
 Пока вы не знаете о нас, но в ближайшем будущем, о нас узнает весь мир.
@@ -118,15 +139,32 @@ def main():
             elif lp['message'] == 'Просто харкнуть в суп':
                 send_message(lp['id'] , 'Хороший выбор' , soup)
             elif lp['message'] == 'Гусь в кровавом кляре':
-                send_message(lp['id'] , 'Хороший выбор' , gus)
+                send_message(lp['id'] , 'Хороший выбор' , main_bludo)
+            elif lp['message'] == 'Взазуза':
+                send_message(lp['id'] , 'Хороший выбор', main_bludo)
+            elif lp['message'] == 'Рагу из пингвинятины':
+                send_message(lp['id'] , 'Хороший выбор', main_bludo)
+            elif lp['message'] == 'Леманадек из пингвинятины':
+                send_message(lp['id'] , 'Хороший выбор', main_bludo)
             elif lp['message'] == 'О нас':
                 send_message(lp['id'] , about_us , main_keyboard)
             elif lp['message'] == 'Помочь денюшкой':
                 send_message(lp['id'] , 'Пока рано' , main_keyboard)
             elif lp['message'] == 'Заказать':
                 send_message(lp['id'] , 'Извините, но мы пока не открылись' , main_keyboard)
+            elif lp['message'] == 'К меню заказов':
+                send_message(lp['id'] , 'Выбирайте' , menu_keyboard)
+
             elif lp['message'] == 'Предыстория':
-                send_message(lp['id'] , pred_gus , gus)
+                last_user_message = last_message(lp['id'])
+                if last_user_message == 'Леманадек из пингвинятины':
+                    send_message(lp['id'] , lemon_sostav , main_bludo)
+                elif last_user_message == 'Взазуза':
+                    send_message(lp['id'] , pinguin_sostav , main_bludo)
+                elif last_user_message == 'Рагу из пингвинятины':
+                    send_message(lp['id'] , ragu_sostav , main_bludo)
+                elif last_user_message == 'Гусь в кровавом кляре':
+                    send_message(lp['id'] , pred_gus , main_bludo)
 
             elif lp['message'] == 'Состав':
                 last_user_message = last_message(lp['id'])
@@ -135,7 +173,13 @@ def main():
                 elif last_user_message == 'Просто харкнуть в суп':
                     send_message(lp['id'] , '{0}'.format(soup_sostav) , soup)
                 elif last_user_message == 'Гусь в кровавом кляре':
-                    send_message(lp['id'] , '{0}'.format(gus_sostav) , gus)
+                    send_message(lp['id'] , '{0}'.format(gus_sostav) , main_bludo)
+                elif last_user_message == 'Леманадек из пингвинятины':
+                    send_message(lp['id'] , '{0}'.format(lemon_sostav) , main_bludo)
+                elif last_user_message == 'Рагу из пингвинятины':
+                    send_message(lp['id'] , '{0}'.format(ragu_sostav) , main_bludo)
+                elif last_user_message == 'Взазуза':
+                    send_message(lp['id'] , '{0}'.format(pinguin_sostav) , main_bludo)
                 else:
                     send_message(lp['id'] , 'Извините, но я вас не понял' , main_keyboard)
 if __name__ == '__main__':
