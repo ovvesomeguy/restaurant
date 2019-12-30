@@ -57,29 +57,19 @@ menu_keyboard = {
     ]
 }
 
-holodec = {
-    'one_time': False,
-    'buttons': [
-        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Состав'}}],
-        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Заказать'}}],
-        [{'color': 'primary'  , 'action': {'type': 'text' , 'label': 'К меню заказов'}}],
-    ]
-}
-
-soup = {
-    'one_time': False,
-    'buttons': [
-        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Состав'}}],
-        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Заказать'}}],
-        [{'color': 'primary'  , 'action': {'type': 'text' , 'label': 'К меню заказов'}}],
-    ]
-}
-
-main_bludo = {
+gus = {
     'one_time': False,
     'buttons': [
         [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Состав'}}],
         [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Предыстория'}}],
+        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Заказать'}}],
+        [{'color': 'primary'  , 'action': {'type': 'text' , 'label': 'К меню заказов'}}],
+    ]
+}
+main_bludo = {
+    'one_time': False,
+    'buttons': [
+        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Состав'}}],
         [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Заказать'}}],
         [{'color': 'primary'  , 'action': {'type': 'text' , 'label': 'К меню заказов'}}],
     ]
@@ -135,11 +125,11 @@ def main():
             if lp['message'] == 'Меню заказов':
                 send_message(lp['id'] , 'Вот наше меню' , menu_keyboard)
             elif lp['message'] == 'Холодец-молодец':
-                send_message(lp['id'] , 'Хороший выбор' , holodec)
-            elif lp['message'] == 'Просто харкнуть в суп':
-                send_message(lp['id'] , 'Хороший выбор' , soup)
-            elif lp['message'] == 'Гусь в кровавом кляре':
                 send_message(lp['id'] , 'Хороший выбор' , main_bludo)
+            elif lp['message'] == 'Просто харкнуть в суп':
+                send_message(lp['id'] , 'Хороший выбор' , main_bludo)
+            elif lp['message'] == 'Гусь в кровавом кляре':
+                send_message(lp['id'] , 'Хороший выбор' , gus)
             elif lp['message'] == 'Взазуза':
                 send_message(lp['id'] , 'Хороший выбор', main_bludo)
             elif lp['message'] == 'Рагу из пингвинятины':
@@ -157,21 +147,15 @@ def main():
 
             elif lp['message'] == 'Предыстория':
                 last_user_message = last_message(lp['id'])
-                if last_user_message == 'Леманадек из пингвинятины':
-                    send_message(lp['id'] , lemon_sostav , main_bludo)
-                elif last_user_message == 'Взазуза':
-                    send_message(lp['id'] , pinguin_sostav , main_bludo)
-                elif last_user_message == 'Рагу из пингвинятины':
-                    send_message(lp['id'] , ragu_sostav , main_bludo)
-                elif last_user_message == 'Гусь в кровавом кляре':
-                    send_message(lp['id'] , pred_gus , main_bludo)
+                if last_user_message == 'Гусь в кровавом кляре':
+                    send_message(lp['id'] , pred_gus , gus)
 
             elif lp['message'] == 'Состав':
                 last_user_message = last_message(lp['id'])
                 if last_user_message == 'Холодец-молодец':
-                    send_message(lp['id'] , 'Вот состав холодца-молодца: {0}'.format(holod_sostav) , holodec)
+                    send_message(lp['id'] , 'Вот состав холодца-молодца: {0}'.format(holod_sostav) , main_bludo)
                 elif last_user_message == 'Просто харкнуть в суп':
-                    send_message(lp['id'] , '{0}'.format(soup_sostav) , soup)
+                    send_message(lp['id'] , '{0}'.format(soup_sostav) , soup_sostav)
                 elif last_user_message == 'Гусь в кровавом кляре':
                     send_message(lp['id'] , '{0}'.format(gus_sostav) , main_bludo)
                 elif last_user_message == 'Леманадек из пингвинятины':
